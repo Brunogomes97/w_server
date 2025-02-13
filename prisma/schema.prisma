@@ -14,8 +14,19 @@ datasource db {
 }
 
 model User {
-  id       String @id @default(uuid()) @db.Uuid
+  id       String   @id @default(uuid()) @db.Uuid
   username String
-  email    String @unique
+  email    String   @unique
   password String
+  notas    Notas[]
+
+}
+model Notas {
+    id        String   @id @default(uuid()) @db.Uuid
+    title     String
+    description String
+    type      String
+    userId    String   @db.Uuid
+    user      User     @relation(fields: [userId], references: [id])
+
 }
