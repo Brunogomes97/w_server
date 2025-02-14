@@ -4,6 +4,7 @@ import { UpdateNotaDto } from './dto/update-nota.dto';
 import { UserRequest } from 'src/types/HttpRequest';
 import { PrismaService } from 'src/db/prisma.service';
 import { FindAllQueryDto } from './dto/get-notas.dto';
+import { EntityNotFoundError } from 'src/errors/entityNotFound.error';
 
 @Injectable()
 export class NotasService {
@@ -74,15 +75,69 @@ export class NotasService {
     return payload
   }
 
-  async findOne(id: number) {
-    return `This action returns a #${id} nota`;
+  async findOne(id: string, user: UserRequest) {
+    return await this.prisma.notas.findFirst({
+      where: {
+        id, user: {
+          id: user.id
+        }
+      },
+    });
   }
 
-  async update(id: number, updateNotaDto: UpdateNotaDto) {
-    return `This action updates a #${id} nota`;
+  async update(id: string, data: UpdateNotaDto, user: UserRequest) {
+    const thisNota = await this.findOne(id, user);
+
+    if (!thisNota) {
+      throw new EntityNotFoundError('Nota');
+    }
+    return await this.prisma.notas.update({
+      where: {
+        id
+      },
+      data
+    })
   }
 
-  async remove(id: number) {
-    return `This action removes a #${id} nota`;
+  async remove(id: string, user: UserRequest) {
+    const thisNota = await this.findOne(id, user);
+
+    if (!thisNota) {
+      throw new EntityNotFoundError('Nota');
+    }
+
+    return await this.prisma.notas.delete({
+      where: {
+        id
+      }
+    })
+  }
+
+  async removeMany(ids: string[], user: UserRequest) {
+    const verifyAllNotas = await this.prisma.notas.findMany({
+      where: {
+        id: {
+          in: ids
+        },
+        user: {
+          id: user.id
+        }
+      }
+    })
+
+    if (verifyAllNotas.length !== ids.length) {
+      throw new EntityNotFoundError('Nota');
+    }
+
+    return await this.prisma.notas.deleteMany({
+      where: {
+        id: {
+          in: ids
+        },
+        user: {
+          id: user.id
+        }
+      }
+    })
   }
 }

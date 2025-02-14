@@ -16,10 +16,7 @@ export class AuthService {
       throw new EntityNotFoundError('User');
     }
 
-    const passComparison = await bcrypt.compare(password, user.password).catch(() => {
-      throw new EntityNotFoundError('User');
-    });
-
+    const passComparison = await bcrypt.compare(password, user.password)
 
     if (!passComparison) {
       throw new EntityNotFoundError('User');
@@ -31,6 +28,7 @@ export class AuthService {
     };
 
     const token = await this.jwtService.signAsync(userData);
+
 
     const payload = {
       id: user.id,

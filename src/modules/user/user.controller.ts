@@ -13,17 +13,11 @@ import { UserService } from './user.service';
 import { CreateUserDTO } from './dto/create-user.dto';
 
 
-@UsePipes(
-  new ValidationPipe({
-    transform: true,
-    whitelist: true,
-  }),
-)
+@UsePipes(new ValidationPipe({ transform: true }))
 @Controller('user')
 export class UserController {
   constructor(private readonly userService: UserService) { }
   @Post()
-
   async create(@Body() data: CreateUserDTO) {
     try {
       return await this.userService.create(data);

@@ -1,4 +1,24 @@
-import { PartialType } from '@nestjs/mapped-types';
-import { CreateNotaDto } from './create-nota.dto';
+import { IsOptional, IsString, IsIn } from 'class-validator';
 
-export class UpdateNotaDto extends PartialType(CreateNotaDto) {}
+export class UpdateNotaDto {
+    @IsOptional()
+    @IsString()
+    title?: string;
+
+    @IsOptional()
+    @IsString()
+    description?: string;
+
+    @IsOptional()
+    @IsIn([
+        'personal',
+        'work',
+        'study',
+        'idea',
+        'reminder',
+        'todo',
+        'meeting',
+    ])
+    type?: string;
+}
+
