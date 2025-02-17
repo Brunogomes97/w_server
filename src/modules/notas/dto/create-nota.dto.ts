@@ -1,4 +1,4 @@
-import { IsIn, IsNotEmpty, IsString } from 'class-validator';
+import { IsIn, IsNotEmpty, IsString, Length } from 'class-validator';
 
 export class CreateNotaDto {
     @IsString()
@@ -7,6 +7,7 @@ export class CreateNotaDto {
 
     @IsString()
     @IsNotEmpty()
+    @Length(1, 250)
     description: string;
 
     @IsNotEmpty()
@@ -15,7 +16,7 @@ export class CreateNotaDto {
         'personal',
         'work',
         'study',
-        'idea',
+        'ideia',
         'reminder',
         'todo',
         'meeting',

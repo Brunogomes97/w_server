@@ -34,8 +34,10 @@ export class NotasService {
   }
 
   async findAll(queries: FindAllQueryDto, user: UserRequest) {
-    const { offset = 0, limit = 10, type, search } = queries;
+    const { offset = 0, limit = 10, type, search, order } = queries;
     const where = {};
+
+    const typeOrder = order === 'asc' ? 'asc' : 'desc';
 
     if (search) {
       where['title'] = {
@@ -54,6 +56,9 @@ export class NotasService {
       },
       skip: offset,
       take: limit,
+      orderBy: {
+        createdAt: typeOrder
+      }
     })
 
     const total = await this.prisma.notas.count({

@@ -1,5 +1,5 @@
 import { Transform } from 'class-transformer';
-import { IsOptional, IsNumber, IsString, IsDateString } from 'class-validator';
+import { IsOptional, IsNumber, IsString, IsDateString, IsIn } from 'class-validator';
 
 export class FindAllQueryDto {
   @IsOptional()
@@ -23,4 +23,10 @@ export class FindAllQueryDto {
   @IsOptional()
   @IsString()
   search: string;
+
+  @IsOptional()
+  @IsString()
+  @IsIn(['asc', 'desc'])
+  order: string;
+
 }

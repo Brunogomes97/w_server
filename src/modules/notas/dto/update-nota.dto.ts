@@ -1,24 +1,26 @@
-import { IsOptional, IsString, IsIn } from 'class-validator';
+import { IsIn, IsNotEmpty, IsString, Length } from 'class-validator';
 
 export class UpdateNotaDto {
-    @IsOptional()
     @IsString()
-    title?: string;
+    @IsNotEmpty()
+    title: string;
 
-    @IsOptional()
     @IsString()
-    description?: string;
+    @IsNotEmpty()
+    @Length(1, 250)
+    description: string;
 
-    @IsOptional()
+    @IsNotEmpty()
+    @IsString()
     @IsIn([
         'personal',
         'work',
         'study',
-        'idea',
+        'ideia',
         'reminder',
         'todo',
         'meeting',
     ])
-    type?: string;
+    type: string;
 }
 
