@@ -34,7 +34,7 @@ export class NotasService {
   }
 
   async findAll(queries: FindAllQueryDto, user: UserRequest) {
-    const { offset = 0, limit = 10, search } = queries;
+    const { offset = 0, limit = 10, type, search } = queries;
     const where = {};
 
     if (search) {
@@ -47,6 +47,7 @@ export class NotasService {
     const notas = await this.prisma.notas.findMany({
       where: {
         ...where,
+        type,
         user: {
           id: user.id
         }
