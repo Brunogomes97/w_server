@@ -2,6 +2,7 @@ import { Injectable } from '@nestjs/common';
 import { CreateUserDTO } from './dto/create-user.dto';
 import { PrismaService } from 'src/db/prisma.service';
 import * as bcrypt from 'bcrypt';
+import { EntityAlreadyExistsError } from 'src/errors/entityAlreadyExists.error';
 @Injectable()
 export class UserService {
   constructor(private prisma: PrismaService) { }
@@ -13,7 +14,7 @@ export class UserService {
       },
     });
     if (userExists) {
-      throw new Error('User already exists');
+      throw new EntityAlreadyExistsError("User")
     }
 
     const hashedPassword = await bcrypt.hash(data.password, 10);
