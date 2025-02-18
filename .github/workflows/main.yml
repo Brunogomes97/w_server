@@ -1,0 +1,41 @@
+name: Deploy NestJS App with Yarn and PM2
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      # Checkout do código da branch main
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      # Definir a variável de ambiente SSH_HOST a partir de variables
+      - name: Set environment variables
+        run: echo "SSH_HOST=${{ vars.SSH_HOST }}" >> $GITHUB_ENV
+      # Configurar a chave SSH para acessar a VPS
+      - name: Setup SSH
+        uses: webfactory/ssh-agent@v0.5.3
+        with:
+          ssh-private-key: ${{ secrets.SSH_VULTR_PRIVATE_KEY }}
+          
+      # Adicionar o host à lista de conhecidos para evitar erro de autenticação
+      - name: Add SSH Host to known_hosts
+        run: ssh-keyscan -H $SSH_HOST >> ~/.ssh/known_hosts
+
+      # Deploy via SSH
+      - name: Deploy to VPS
+        run: |
+          ssh -o StrictHostKeyChecking=no root@$SSH_HOST << 'EOF'
+            cd /root/server/w_server
+            git pull origin main
+            yarn install --frozen-lockfile  # Instalar dependências usando Yarn
+            yarn prisma generate            # Gerar o Prisma Client atualizado
+            yarn prisma migrate deploy      # Aplicar as migrações ao banco de dados
+            yarn build                      # Build do projeto com Yarn
+            pm2 restart demo-server        # Reiniciar o app gerenciado pelo PM2
+          EOF
