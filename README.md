@@ -4,7 +4,7 @@
 - App Next (Frontend): [Repositório do App](https://github.com/Brunogomes97/w_client)
 - Repositório da API: [w\_server](https://github.com/Brunogomes97/w_server.git)
 
-Este projeto é uma API desenvolvida com Nest.js para um aplicativo de gestão de notas. Ele fornece funcionalidades para gerenciamento seguro e eficiente de informações relacionadas ao sistema. A API está hospedada com redirecionamento de um servidor Nginx.
+Este projeto é uma API desenvolvida com Nest.js para um aplicativo de gestão de notas. Ele fornece funcionalidades para gerenciamento seguro e eficiente de informações relacionadas ao sistema. A API está hospedada com redirecionamento de um servidor Nginx e conta com um script para entrega contínua.
 
 ## Tecnologias Utilizadas
 
@@ -35,8 +35,12 @@ Este projeto é uma API desenvolvida com Nest.js para um aplicativo de gestão d
    ```bash
    npm install
    ```
-
-4. Configure as variáveis de ambiente no arquivo `.env` com os seguintes campos:
+4. Sincronize com as migrações do banco de dados
+ ```bash
+   npx prisma generate            # Gerar o Prisma Client atualizado
+   npx prisma migrate deploy      # Aplicar as migrações ao banco de dados 
+   ```
+6. Configure as variáveis de ambiente no arquivo `.env` com os seguintes campos:
 
    ```env
    DATABASE_URL=postgresql://admin:admin@localhost:5432/gestao_notas
@@ -45,7 +49,7 @@ Este projeto é uma API desenvolvida com Nest.js para um aplicativo de gestão d
    JWT_EXPIRES_IN=30d
    ```
 
-5. Suba um banco de dados PostgreSQL utilizando Docker:
+7. Suba um banco de dados PostgreSQL utilizando Docker:
 
    ```bash
    docker run --name postgresDB -e POSTGRES_USER=admin -e POSTGRES_PASSWORD=admin -e POSTGRES_DB=gestao_notas -p 5432:5432 -d postgres
