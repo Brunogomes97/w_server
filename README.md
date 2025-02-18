@@ -1,99 +1,102 @@
-<p align="center">
-  <a href="http://nestjs.com/" target="blank"><img src="https://nestjs.com/img/logo-small.svg" width="120" alt="Nest Logo" /></a>
-</p>
+# API de Gestão de Notas
 
-[circleci-image]: https://img.shields.io/circleci/build/github/nestjs/nest/master?token=abc123def456
-[circleci-url]: https://circleci.com/gh/nestjs/nest
+- Aplicação hospedada: [Gestão de Notas](https://w-client.vercel.app/)
+- App Next (Frontend): [Repositório do App](https://github.com/Brunogomes97/w_client)
+- Repositório da API: [w\_server](https://github.com/Brunogomes97/w_server.git)
 
-  <p align="center">A progressive <a href="http://nodejs.org" target="_blank">Node.js</a> framework for building efficient and scalable server-side applications.</p>
-    <p align="center">
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/v/@nestjs/core.svg" alt="NPM Version" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/l/@nestjs/core.svg" alt="Package License" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/dm/@nestjs/common.svg" alt="NPM Downloads" /></a>
-<a href="https://circleci.com/gh/nestjs/nest" target="_blank"><img src="https://img.shields.io/circleci/build/github/nestjs/nest/master" alt="CircleCI" /></a>
-<a href="https://coveralls.io/github/nestjs/nest?branch=master" target="_blank"><img src="https://coveralls.io/repos/github/nestjs/nest/badge.svg?branch=master#9" alt="Coverage" /></a>
-<a href="https://discord.gg/G7Qnnhy" target="_blank"><img src="https://img.shields.io/badge/discord-online-brightgreen.svg" alt="Discord"/></a>
-<a href="https://opencollective.com/nest#backer" target="_blank"><img src="https://opencollective.com/nest/backers/badge.svg" alt="Backers on Open Collective" /></a>
-<a href="https://opencollective.com/nest#sponsor" target="_blank"><img src="https://opencollective.com/nest/sponsors/badge.svg" alt="Sponsors on Open Collective" /></a>
-  <a href="https://paypal.me/kamilmysliwiec" target="_blank"><img src="https://img.shields.io/badge/Donate-PayPal-ff3f59.svg" alt="Donate us"/></a>
-    <a href="https://opencollective.com/nest#sponsor"  target="_blank"><img src="https://img.shields.io/badge/Support%20us-Open%20Collective-41B883.svg" alt="Support us"></a>
-  <a href="https://twitter.com/nestframework" target="_blank"><img src="https://img.shields.io/twitter/follow/nestframework.svg?style=social&label=Follow" alt="Follow us on Twitter"></a>
-</p>
-  <!--[![Backers on Open Collective](https://opencollective.com/nest/backers/badge.svg)](https://opencollective.com/nest#backer)
-  [![Sponsors on Open Collective](https://opencollective.com/nest/sponsors/badge.svg)](https://opencollective.com/nest#sponsor)-->
+Este projeto é uma API desenvolvida com Nest.js para um aplicativo de gestão de notas. Ele fornece funcionalidades para gerenciamento seguro e eficiente de informações relacionadas ao sistema. A API está hospedada com redirecionamento de um servidor Nginx.
 
-## Description
+## Tecnologias Utilizadas
 
-[Nest](https://github.com/nestjs/nest) framework TypeScript starter repository.
+- **Nest.js** (Framework backend para Node.js)
+- **Prisma ORM** (Mapeamento objeto-relacional para PostgreSQL)
+- **PostgreSQL** (Banco de dados relacional)
+- **JWT** (Autenticação baseada em tokens)
+- **Bcrypt** (Criptografia de senhas)
+- **Class Validator e Class Transformer** (Validação e transformação de objetos)
+- **Dotenv** (Gerenciamento de variáveis de ambiente)
 
-## Project setup
+### Instalação
 
-```bash
-$ yarn install
-```
+1. Clone o repositório:
 
-## Compile and run the project
+   ```bash
+   git clone https://github.com/Brunogomes97/w_server.git
+   ```
 
-```bash
-# development
-$ yarn run start
+2. Acesse a pasta do projeto:
 
-# watch mode
-$ yarn run start:dev
+   ```bash
+   cd w_server
+   ```
 
-# production mode
-$ yarn run start:prod
-```
+3. Instale as dependências:
 
-## Run tests
+   ```bash
+   npm install
+   ```
 
-```bash
-# unit tests
-$ yarn run test
+4. Configure as variáveis de ambiente no arquivo `.env` com os seguintes campos:
 
-# e2e tests
-$ yarn run test:e2e
+   ```env
+   DATABASE_URL=postgresql://admin:admin@localhost:5432/gestao_notas
+   JWT_SECRET=sua_chave_secreta
+   CLIENT_URL=link_do_app_next
+   JWT_EXPIRES_IN=30d
+   ```
 
-# test coverage
-$ yarn run test:cov
-```
+5. Suba um banco de dados PostgreSQL utilizando Docker:
 
-## Deployment
+   ```bash
+   docker run --name postgresDB -e POSTGRES_USER=admin -e POSTGRES_PASSWORD=admin -e POSTGRES_DB=gestao_notas -p 5432:5432 -d postgres
+   ```
 
-When you're ready to deploy your NestJS application to production, there are some key steps you can take to ensure it runs as efficiently as possible. Check out the [deployment documentation](https://docs.nestjs.com/deployment) for more information.
+## Executando o Projeto
 
-If you are looking for a cloud-based platform to deploy your NestJS application, check out [Mau](https://mau.nestjs.com), our official platform for deploying NestJS applications on AWS. Mau makes deployment straightforward and fast, requiring just a few simple steps:
+### Desenvolvimento
 
 ```bash
-$ yarn install -g mau
-$ mau deploy
+npm run start:dev
 ```
 
-With Mau, you can deploy your application in just a few clicks, allowing you to focus on building features rather than managing infrastructure.
+### Produção
 
-## Resources
+```bash
+npm run build
+npm run start:prod
+```
 
-Check out a few resources that may come in handy when working with NestJS:
+## Testes
 
-- Visit the [NestJS Documentation](https://docs.nestjs.com) to learn more about the framework.
-- For questions and support, please visit our [Discord channel](https://discord.gg/G7Qnnhy).
-- To dive deeper and get more hands-on experience, check out our official video [courses](https://courses.nestjs.com/).
-- Deploy your application to AWS with the help of [NestJS Mau](https://mau.nestjs.com) in just a few clicks.
-- Visualize your application graph and interact with the NestJS application in real-time using [NestJS Devtools](https://devtools.nestjs.com).
-- Need help with your project (part-time to full-time)? Check out our official [enterprise support](https://enterprise.nestjs.com).
-- To stay in the loop and get updates, follow us on [X](https://x.com/nestframework) and [LinkedIn](https://linkedin.com/company/nestjs).
-- Looking for a job, or have a job to offer? Check out our official [Jobs board](https://jobs.nestjs.com).
+Para rodar os testes unitários:
 
-## Support
+```bash
+npm run test
+````
 
-Nest is an MIT-licensed open source project. It can grow thanks to the sponsors and support by the amazing backers. If you'd like to join them, please [read more here](https://docs.nestjs.com/support).
+## Estrutura do Projeto
 
-## Stay in touch
+```
+.github/workflows/
+  |-- main.yml
+/dist/
+/node_modules/
+/prisma/
+/src/
+  |-- config/      # Configurações do sistema
+  |-- db/          # Conexão com o banco de dados
+  |-- errors/      # Manipulação de erros
+  |-- filters/     # Filtros globais para requisições
+  |-- modules/     # Módulos da aplicação
+  |-- types/       # Tipos e interfaces
+  |-- app.controller.ts  # Controlador principal
+  |-- app.module.ts      # Módulo principal
+  |-- app.service.ts     # Serviços principais
+  |-- main.ts            # Arquivo de inicialização da aplicação
+/test/  # Testes unitários e de integração
+```
 
-- Author - [Kamil Myśliwiec](https://twitter.com/kammysliwiec)
-- Website - [https://nestjs.com](https://nestjs.com/)
-- Twitter - [@nestframework](https://twitter.com/nestframework)
+## Licença
 
-## License
+Este projeto está sob a licença MIT.
 
-Nest is [MIT licensed](https://github.com/nestjs/nest/blob/master/LICENSE).
