@@ -3,7 +3,7 @@ import { Injectable } from '@nestjs/common';
 import { signInDto } from './dto/auth.dto';
 import { JwtService } from '@nestjs/jwt';
 import { EntityNotFoundError } from 'src/errors/entityNotFound.error';
-import { PrismaService } from 'src/db/prisma.service';
+import { PrismaService } from '../../db/prisma.service';
 
 @Injectable()
 export class AuthService {

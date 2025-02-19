@@ -2,7 +2,7 @@ import { Injectable } from '@nestjs/common';
 import { CreateNotaDto } from './dto/create-nota.dto';
 import { UpdateNotaDto } from './dto/update-nota.dto';
 import { UserRequest } from 'src/types/HttpRequest';
-import { PrismaService } from 'src/db/prisma.service';
+import { PrismaService } from '../../db/prisma.service';
 import { FindAllQueryDto } from './dto/get-notas.dto';
 import { EntityNotFoundError } from 'src/errors/entityNotFound.error';
 import { Nota } from './entities/nota.entity';

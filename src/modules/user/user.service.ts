@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { CreateUserDTO } from './dto/create-user.dto';
-import { PrismaService } from 'src/db/prisma.service';
+import { PrismaService } from '../../db/prisma.service';
 import * as bcrypt from 'bcrypt';
 import { EntityAlreadyExistsError } from 'src/errors/entityAlreadyExists.error';
 @Injectable()
