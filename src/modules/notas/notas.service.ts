@@ -5,6 +5,8 @@ import { UserRequest } from 'src/types/HttpRequest';
 import { PrismaService } from 'src/db/prisma.service';
 import { FindAllQueryDto } from './dto/get-notas.dto';
 import { EntityNotFoundError } from 'src/errors/entityNotFound.error';
+import { Nota } from './entities/nota.entity';
+import { FindAllResponse } from 'src/types/querys';
 
 @Injectable()
 export class NotasService {
@@ -33,7 +35,7 @@ export class NotasService {
     return payload;
   }
 
-  async findAll(queries: FindAllQueryDto, user: UserRequest) {
+  async findAll(queries: FindAllQueryDto, user: UserRequest): Promise<FindAllResponse> {
     const { offset = 0, limit = 10, type, search, order } = queries;
     const where = {};
 
@@ -46,7 +48,7 @@ export class NotasService {
       };
     }
 
-    const notas = await this.prisma.notas.findMany({
+    const notas: Nota[] = await this.prisma.notas.findMany({
       where: {
         ...where,
         type,

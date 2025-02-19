@@ -1,5 +1,5 @@
 import { Transform } from 'class-transformer';
-import { IsOptional, IsNumber, IsString, IsDateString, IsIn } from 'class-validator';
+import { IsOptional, IsNumber, IsString, IsIn } from 'class-validator';
 
 export class FindAllQueryDto {
   @IsOptional()
@@ -15,10 +15,6 @@ export class FindAllQueryDto {
   @IsOptional()
   @IsString()
   type: string;
-
-  @IsOptional()
-  @IsDateString()
-  started_at: Date;
 
   @IsOptional()
   @IsString()
