@@ -17,6 +17,7 @@ jobs:
       # Definir a variável de ambiente SSH_HOST a partir de variables
       - name: Set environment variables
         run: echo "SSH_HOST=${{ vars.SSH_HOST }}" >> $GITHUB_ENV
+
       # Configurar a chave SSH para acessar a VPS
       - name: Setup SSH
         uses: webfactory/ssh-agent@v0.5.3
@@ -36,6 +37,10 @@ jobs:
             yarn install --frozen-lockfile  # Instalar dependências usando Yarn
             yarn prisma generate            # Gerar o Prisma Client atualizado
             yarn prisma migrate deploy      # Aplicar as migrações ao banco de dados
+
+            # Rodar testes antes do build (se falhar, o deploy é interrompido)
+            yarn test || exit 1
+
             yarn build                      # Build do projeto com Yarn
-            pm2 restart demo-server        # Reiniciar o app gerenciado pelo PM2
+            pm2 restart demo-server         # Reiniciar o app gerenciado pelo PM2
           EOF
