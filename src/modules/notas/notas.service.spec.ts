@@ -1,11 +1,11 @@
 import { Test, TestingModule } from '@nestjs/testing';
 import { NotasService } from './notas.service';
-import { PrismaService } from 'src/db/prisma.service';
 import { mockDeep, DeepMockProxy } from 'jest-mock-extended';
 import { FindAllQueryDto } from './dto/get-notas.dto';
 import { Nota } from './entities/nota.entity';
 import { FindAllResponse } from 'src/types/querys';
 import { EntityNotFoundError } from 'src/errors/entityNotFound.error';
+import { PrismaService } from '../../db/prisma.service';
 
 describe('NotasService', () => {
   let service: NotasService;
